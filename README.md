@@ -21,5 +21,4 @@ This tool helps summarize IP activity, detect repeated failed login attempts, an
 - Entry-level security or system administration assessment
 
 ## Usage
-```bash
-python analyzer.py
+python analyzer.py --file sample.log --limit 2 --export suspicious_ips.csv
