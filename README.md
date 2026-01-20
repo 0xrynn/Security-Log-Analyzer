@@ -12,5 +12,14 @@ Learning and educational purposes
 Basic log review for system administrators
 Demonstration project for technical assessments
 
+## Features
+- Detect failed login attempts
+- Identify suspicious IP addresses
+- Summarize IP activity
+
+## Usage
+```bash
+python analyzer.py
+
 ⚠️ Disclaimer:
 This tool is intended for educational and defensive purposes only. It does not perform any offensive actions or real-world attacks.
