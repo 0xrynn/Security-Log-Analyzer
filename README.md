@@ -1,2 +1,16 @@
 # Security-Log-Analyzer
-A simple Python-based security log analyzer that detects failed login attempts, summarizes IP activity, and highlights suspicious behavior for basic security monitoring and learning purposes.
+Security Log Analyzer is a lightweight Python tool designed to analyze authentication log files and identify potential security issues.
+This tool helps summarize IP activity, detect repeated failed login attempts, and flag suspicious behavior based on configurable thresholds.
+The project demonstrates fundamental skills in log parsing, data analysis, and basic security monitoring, which are commonly used in system administration and entry-level security roles.
+Key Objectives
+Practice reading and parsing log files
+Understand basic security event patterns
+Build a defensive and ethical security-related tool
+Showcase clean code structure and documentation
+Intended Use
+Learning and educational purposes
+Basic log review for system administrators
+Demonstration project for technical assessments
+
+⚠️ Disclaimer:
+This tool is intended for educational and defensive purposes only. It does not perform any offensive actions or real-world attacks.
