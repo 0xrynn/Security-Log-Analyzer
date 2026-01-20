@@ -1,8 +1,7 @@
 import re
+import argparse
+import csv
 from collections import Counter
-
-LOG_FILE = "sample.log"
-FAILED_LIMIT = 3
 
 def analyze_log(file_path):
     failed_ips = []
@@ -21,21 +20,43 @@ def analyze_log(file_path):
     return all_ips, failed_ips
 
 
+def export_csv(data, output_file):
+    with open(output_file, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["IP Address", "Failed Attempts"])
+        for ip, count in data.items():
+            writer.writerow([ip, count])
+
+
 def main():
-    all_ips, failed_ips = analyze_log(LOG_FILE)
+    parser = argparse.ArgumentParser(description="Security Log Analyzer")
+    parser.add_argument("--file", required=True, help="Path to log file")
+    parser.add_argument("--limit", type=int, default=3, help="Failed login threshold")
+    parser.add_argument("--export", help="Export suspicious IPs to CSV file")
+    args = parser.parse_args()
 
-    print("=== Security Log Analyzer ===\n")
+    all_ips, failed_ips = analyze_log(args.file)
 
-    print("[+] Total IP activity:")
-    for ip, count in Counter(all_ips).items():
-        print(f" - {ip}: {count} times")
+    print("\n=== Security Log Analyzer ===\n")
 
-    print("\n[!] Failed login attempts:")
-    for ip, count in Counter(failed_ips).items():
+    print("[+] IP Activity Summary:")
+    ip_counter = Counter(all_ips)
+    for ip, count in ip_counter.items():
+        print(f" - {ip}: {count} activities")
+
+    print("\n[!] Failed Login Attempts:")
+    failed_counter = Counter(failed_ips)
+    suspicious_ips = {}
+
+    for ip, count in failed_counter.items():
         print(f" - {ip}: {count} failed attempts")
+        if count >= args.limit:
+            print("   ⚠️ Suspicious activity detected")
+            suspicious_ips[ip] = count
 
-        if count >= FAILED_LIMIT:
-            print(f"   ⚠️  Suspicious activity detected from {ip}")
+    if args.export and suspicious_ips:
+        export_csv(suspicious_ips, args.export)
+        print(f"\n[+] Suspicious IPs exported to {args.export}")
 
 if __name__ == "__main__":
     main()
